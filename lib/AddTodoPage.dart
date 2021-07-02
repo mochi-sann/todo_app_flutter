@@ -1,6 +1,4 @@
-
 import 'package:flutter/material.dart';
-
 
 class TodoAddPage extends StatefulWidget {
   @override
@@ -14,8 +12,9 @@ class _TodoAddPageState extends State {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          title: Text('リストを追加', style: TextStyle(color: Colors.black)),
-          backgroundColor: Colors.grey[200]),
+          // foregroundColor: Colors.grey[900],
+          title: Text('リストを追加', style: TextStyle(color: Colors.white)),
+          backgroundColor: Colors.grey[900]),
       body: Container(
           padding: EdgeInsets.all(64),
           child: Column(

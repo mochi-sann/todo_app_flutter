@@ -15,6 +15,8 @@ class MyTodoApp extends StatelessWidget {
       // アプリ名
       title: 'My Todo App',
       theme: ThemeData(
+        // デフォルト フォント
+        fontFamily: 'NotoSansJP',
         // テーマカラー
         primarySwatch: Colors.indigo,
       ),
@@ -38,8 +40,10 @@ class _TodoListPageState extends State<TodoListPage> {
     return Scaffold(
       // AppBarを表示し、タイトルも設定
       appBar: AppBar(
-          title: Text('リスト一覧', style: TextStyle(color: Colors.grey[900])),
-          backgroundColor: Colors.grey[200]),
+        title: Text('リスト一覧', style: TextStyle(color: Colors.white)),
+        backgroundColor: Colors.grey[900],
+        foregroundColor: Colors.grey[100],
+      ),
       // *** 追加する部分 ***
       // ListViewを使いリスト一覧を表示
       body: ListView.builder(
@@ -47,8 +51,16 @@ class _TodoListPageState extends State<TodoListPage> {
         itemBuilder: (context, index) {
           return Card(
             child: ListTile(
-              title: Text(todoList[index]),
-            ),
+                title: Text(todoList[index]),
+                trailing: OutlinedButton(
+                  onPressed: () {
+                    setState(() {
+                      todoList.removeAt(index);
+                    });
+                    // print("ボタンを押した");
+                  },
+                  child: Text('完了'),
+                )),
           );
         },
       ),

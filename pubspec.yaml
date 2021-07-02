@@ -47,6 +47,16 @@ flutter:
   # included with your application, so that you can use the icons in
   # the material Icons class.
   uses-material-design: true
+  fonts:
+    - family: NotoSansJP
+      fonts:
+        - asset: assets/font/NotoSansJP-Regular.otf
+    - family: ReggaeOneRegular
+      fonts:
+        - asset: assets/font/ReggaeOne-Regular.ttf
+    - family: PottaOneRegular
+      fonts:
+        - asset: assets/font/PottaOne-Regular.ttf
 
   # To add assets to your application, add an assets section, like this:
   # assets:
