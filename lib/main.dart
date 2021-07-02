@@ -23,8 +23,15 @@ class MyTodoApp extends StatelessWidget {
   }
 }
 
+class TodoListPage extends StatefulWidget {
+  @override
+  _TodoListPageState createState() => _TodoListPageState();
+}
+
 // リスト一覧画面用Widget
-class TodoListPage extends StatelessWidget {
+class _TodoListPageState extends State<TodoListPage> {
+  List<String> todoList = [];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,44 +41,33 @@ class TodoListPage extends StatelessWidget {
           backgroundColor: Colors.grey[200]),
       // *** 追加する部分 ***
       // ListViewを使いリスト一覧を表示
-      body: ListView(
-        children: <Widget>[
-          Card(
+      body: ListView.builder(
+        itemCount: todoList.length,
+        itemBuilder: (context, index) {
+          return Card(
             child: ListTile(
-              title: Text('ニンジンを買う'),
+              title: Text(todoList[index]),
             ),
-          ),
-          Card(
-            child: ListTile(
-              title: Text('ニンジンを買う'),
-            ),
-          ),
-          Card(
-            child: ListTile(
-              title: Text('ニンジンを買う'),
-            ),
-          ),
-          Card(
-            child: ListTile(
-              title: Text('ニンジンを買う'),
-            ),
-          ),
-          Card(
-            child: ListTile(
-              title: Text('ニンジンを買う'),
-            ),
-          ),
-        ],
+          );
+        },
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.of(context).push(
+        onPressed: () async {
+          // "push"で新規画面に遷移
+          // リスト追加画面から渡される値を受け取る
+          final newListText = await Navigator.of(context).push(
             MaterialPageRoute(builder: (context) {
               // 遷移先の画面としてリスト追加画面を指定
               return TodoAddPage();
             }),
           );
-          // --- 省略 ---
+          if (newListText != null) {
+            // キャンセルした場合は newListText が null となるので注意
+            setState(() {
+              // リスト追加
+              todoList.add(newListText);
+            });
+          }
         },
         child: Icon(Icons.add),
       ),
@@ -91,7 +87,7 @@ class _TodoAddPageState extends State {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          title: Text('リストを追加', style: TextStyle(color: Colors.grey[900])),
+          title: Text('リストを追加', style: TextStyle(color: Colors.black)),
           backgroundColor: Colors.grey[200]),
       body: Container(
           padding: EdgeInsets.all(64),
@@ -114,7 +110,9 @@ class _TodoAddPageState extends State {
                       backgroundColor: MaterialStateProperty.all<Color>(
                           Colors.blueAccent.shade400),
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.of(context).pop(_text);
+                    },
                     child: Text('リスト追加', style: TextStyle(color: Colors.white)),
                   ),
                 ),
@@ -128,6 +126,7 @@ class _TodoAddPageState extends State {
                       ),
                       onPressed: () {
                         // "pop"で前の画面に戻る
+                        //
                         Navigator.of(context).pop();
                       },
                       child: Text('キャンセル'),
